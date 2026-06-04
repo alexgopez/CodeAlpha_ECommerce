@@ -4,51 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4ce Anik Anik</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- body div for css -->
-<div class="body">
+<div class="body-container">
+    <header>
+        <h1>Welcome to 4ce Anik Anik!</h1>
+        <h2>Handmade with love. 💝🌸✨</h2>
+    </header>
 
-<!-- header -->
-    <h1> Welcome to 4ce Anik Anik! </h1>
-    <h2> Handmade with love. 💝🌸✨ </h2>
-
-<!-- navbar -->
-<div class="navbar">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href=".products">Products</a></li> 
-        <li><a href=".contact-section">Contacts</a></li> 
-        <li><a href="#">About us</a></li>
-    </ul>
-</div>
-
-
-<!-- pop up scheds -->
-    <div class="pop-up">
-        <div class="pop-up-div">
-            <h1> Pop Up Schedules </h1>
-            
-        </div>
-
+    <div class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#products">Products</a></li> 
+            <li><a href="#schedules">Pop-ups</a></li>
+            <li><a href="#contact-section">Contacts</a></li> 
+        </ul>
     </div>
 
-<!-- products -->
-    <div class="product-display" id="products">
+    <div class="main-content">
+        <section class="products-section" id="products">
+            <h2>Our Products</h2>
+            <div class="product-display" id="product-container">
+                </div>
+        </section>
 
+        <aside class="cart-section">
+            <h2>Your Cart 🛒</h2>
+            <ul id="cart-items">
+                </ul>
+            <p class="total">Total: ₱<span id="cart-total">0.00</span></p>
+            <button id="checkout-btn">Checkout</button>
+        </aside>
     </div>
 
-<!-- end of body div-->
+    <section class="pop-up" id="schedules">
+        <h2>Upcoming Pop-Up Schedules</h2>
+        <div class="pop-up-div" id="schedule-container">
+            </div>
+    </section>
+
 </div>
 
-
-<!-- where to contact us -->
-<footer class="contact-section">
-  Contact us @ <br> 
-  <a href="https://www.instagram.com/4ce_anik.anik/"><img src="ig.jpg" alt="Instagram"></a>
-  <a href="https://www.facebook.com/"><img src="fb.jpg" alt="Peysbuk"></a>
+<footer id="contact-section" class="contact-section">
+    <p>Contact us @</p> 
+    <div class="social-links">
+        <a href="https://www.instagram.com/4ce_anik.anik/" target="_blank">Instagram</a> | 
+        <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+    </div>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
