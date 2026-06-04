@@ -1,36 +1,42 @@
-// --- 1. Mock Data --- //
-const products = [
-    { id: 1, name: "Beaded Floral Bracelet", price: 120, image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Crystal Charm Necklace", price: 250, image: "https://via.placeholder.com/150" },
-    { id: 3, name: "Custom Initial Keychain", price: 85, image: "https://via.placeholder.com/150" }
-];
+// --- 1. Global State --- //
+let products = []; // Starts empty, will be filled by your backend!
+let cart = [];
 
+// Mock schedules (since we haven't moved this to the database yet)
 const schedules = [
     { id: 1, date: "June 15, 2026", location: "Intramuros Student Fair", time: "10:00 AM - 4:00 PM" },
     { id: 2, date: "June 22, 2026", location: "Makati Weekend Market", time: "9:00 AM - 6:00 PM" }
 ];
 
-let cart = [];
-
 // --- 2. Render Functions --- //
-function displayProducts() {
-    const productContainer = document.getElementById('product-container');
-    productContainer.innerHTML = ''; 
 
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('card');
-        
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>₱${product.price.toFixed(2)}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
-        `;
-        productContainer.appendChild(productCard);
-    });
+// Fetch and display live products from MongoDB
+async function displayProducts() {
+    try {
+        const response = await fetch('http://localhost:5000/api/products');
+        products = await response.json(); // Save the live data into our array
+
+        const productContainer = document.getElementById('product-container');
+        productContainer.innerHTML = ''; 
+
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('card');
+            
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>₱${product.price.toFixed(2)}</p>
+                <button onclick="addToCart('${product._id}')">Add to Cart</button> 
+            `;
+            productContainer.appendChild(productCard);
+        });
+    } catch (error) {
+        console.error("Error loading products:", error);
+    }
 }
 
+// Display hardcoded schedules
 function displaySchedules() {
     const scheduleContainer = document.getElementById('schedule-container');
     scheduleContainer.innerHTML = '';
@@ -49,10 +55,15 @@ function displaySchedules() {
 }
 
 // --- 3. Cart Logic --- //
+
 function addToCart(productId) {
-    const productToAdd = products.find(p => p.id === productId);
-    cart.push(productToAdd);
-    updateCartUI();
+    // Find the product using MongoDB's automatic _id
+    const productToAdd = products.find(p => p._id === productId); 
+    
+    if (productToAdd) {
+        cart.push(productToAdd);
+        updateCartUI();
+    }
 }
 
 function updateCartUI() {
@@ -73,11 +84,11 @@ function updateCartUI() {
 }
 
 function removeFromCart(index) {
-    cart.splice(index, 1); // Remove the item at that specific index
-    updateCartUI(); // Refresh the display
+    cart.splice(index, 1); 
+    updateCartUI(); 
 }
 
 // --- 4. Initialize Page --- //
-// Run these functions when the page loads
+// Run these functions immediately when the page loads
 displayProducts();
 displaySchedules();
